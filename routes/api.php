@@ -27,12 +27,14 @@ Route::post('/upload', function (Request $request) { // Ensure Request is used c
         'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
 
-    $path = $request->file('image')->store('public/images'); 
+    // $path = $request->file('image')->store('public/images'); 
+    $path=Storage::disk('private')->put($filename, $request->file('image')->getClientOriginalName());
     $url = Storage::url($path);
 
     return response()->json(['message' => 'Image uploaded successfully', 'url' => $url], 201);
 });
-
+ 
+ 
 
 
 
