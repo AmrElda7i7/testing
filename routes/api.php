@@ -1,25 +1,4 @@
-<?php
-
-use App\Models\Post;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
-Route::post('/posts', function (Request $request) {
-
-
-    $post = Post::create([
-        'title' => $request->title,
-    ]);
-
-    return response()->json(['message' => 'post created', 'post' => $post], 201);
-});  // Create an article
-Route::get('/posts', function () {
-    $posts = Post::all();
-    return response()->json($posts);
-});  // Create an article
+<?php 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -43,13 +22,13 @@ Route::get('/posts', function () {
 });
 
 // Image Upload Route
-Route::post('/upload', function (Request $request) {
+Route::post('/upload', function ($request) { // No need to redefine Request
     $request->validate([
-        'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Max 2MB image file
+        'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
 
-    $path = $request->file('image')->store('public/images'); // Store image in storage/app/public/images
-    $url = Storage::url($path); // Generate a public URL
+    $path = $request->file('image')->store('public/images'); 
+    $url = Storage::url($path);
 
     return response()->json(['message' => 'Image uploaded successfully', 'url' => $url], 201);
 });
