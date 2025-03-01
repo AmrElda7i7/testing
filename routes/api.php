@@ -1,4 +1,4 @@
-<?php 
+<?php
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -22,7 +22,7 @@ Route::get('/posts', function () {
 });
 
 // Image Upload Route
-Route::post('/upload', function ($request) { // No need to redefine Request
+Route::post('/upload', function (Request $request) { // Ensure Request is used correctly
     $request->validate([
         'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
